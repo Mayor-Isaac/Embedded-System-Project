@@ -3,7 +3,7 @@ import Header from './components/Header'
 
 export default function Layout() {
   return (
-    <main>
+    <main className='p-5'>
       <Header />
     </main>
   )
