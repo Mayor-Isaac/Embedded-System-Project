@@ -79,6 +79,10 @@ export default function Hero() {
     const [temp, setTemp] = useState(null);
     const [pressure, setPressure] = useState(null);
 
+    const [tempFade, setTempFade] = useState(false);
+    const [pressureFade, setPressureFade] = useState(false);
+
+
     useEffect(() => {
       // 1. Point to data path
         const tempRef = ref(db, "environment/temp");
@@ -102,6 +106,19 @@ export default function Hero() {
     }, []);
 
 
+    useEffect(() => {
+      if (temp === null) return;
+      setTempFade(true);
+      const t = setTimeout(() => setTempFade(false), 300);
+      return () => clearTimeout(t);
+    }, [temp]);
+
+    useEffect(() => {
+      if (pressure === null) return;
+      setPressureFade(true);
+      const t = setTimeout(() => setPressureFade(false), 300);
+      return () => clearTimeout(t);
+    }, [pressure]);
 
   return (
     <div className="py-5 px-10 rounded-3xl bg-linear-to-tr from-teal-500 via-green-500 to-teal-100">
@@ -110,7 +127,7 @@ export default function Hero() {
           <TiWeatherPartlySunny size={48} className="" />
           <h3 className="font-bold text-[40px]">{"Cloudy"}</h3>
         </div>
-        <h1 className="font-bold text-[48px] transition ease-in-out duration-300">{temp}&deg;</h1>
+        <h1 className={`font-bold text-[48px] transition ease-in-out duration-300 ${tempFade ? 'opacity-0' : 'opacity-100'}`}>{temp}&deg;</h1>
       </div>
 
       <div className="flex gap-5">
@@ -125,7 +142,7 @@ export default function Hero() {
 
       <div className="flex items-center justify-evenly">
         <div className="flex flex-col justify-center items-center">
-          <h3 className="font-bold text-[24px] transition ease-in-out duration-300">{pressure} hPa</h3>
+          <h3 className={`font-bold text-[24px] transition ease-in-out duration-300 ${pressureFade ? 'opacity-0' : 'opacity-100'}`}>{pressure} hPa</h3>
           <p className="text-18px">Pressure</p>
         </div>
       </div>
