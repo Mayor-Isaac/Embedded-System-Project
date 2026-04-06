@@ -24,7 +24,7 @@ const iconMap = {
 };
 
 
-export default function Card({ label, dbPath, data }) {
+export default function Card({ data, onToggle }) {
   const isOn = data.status === "On";
   const ActiveIcon = iconMap[data.activeIcon];
   const InactiveIcon = iconMap[data.inactiveIcon];
@@ -45,6 +45,8 @@ export default function Card({ label, dbPath, data }) {
     set(ref(db, dbPath), nextStatus);
   };
 
+  
+
   return (
     <div className="relative overflow-hidden rounded-3xl">
       <div
@@ -59,7 +61,7 @@ export default function Card({ label, dbPath, data }) {
       >
         <div className="flex items-center justify-between w-full">
           <div className="relative w-6 h-6 text-2xl">
-            {/* {ActiveIcon && (
+            {ActiveIcon && (
               <ActiveIcon
                 size={24}
                 className={` ${data.name === "Bulb" ? "text-yellow-200" : data.name === "Fan" ? "animate-spin" : ""} absolute inset-0 transition-all duration-300 ${
@@ -74,7 +76,7 @@ export default function Card({ label, dbPath, data }) {
                   !isOn ? "opacity-100 scale-100" : "opacity-0 scale-75"
                 }`}
               />
-            )} */}
+            )}
           </div>
 
           <div className="relative w-6 h-6 text-2xl">
@@ -93,12 +95,12 @@ export default function Card({ label, dbPath, data }) {
           </div>
         </div>
 
-        {/* <p className="font-bold text-[20px]">{data.name}</p> */}
+        <p className="font-bold text-[20px]">{data.name}</p>
 
         <div className="flex items-center justify-between w-full">
-          {/* <h3 className="uppercase font-light text-[16px] ">{data.status}</h3> */}
+          <h3 className="uppercase font-light text-[16px] ">{data.status}</h3>
           <div
-            onClick={handleToggle}
+            onClick={onToggle}
             className={`w-14 h-8 p-0.5 cursor-pointer transition relative ease-in-out duration-200 rounded-full ${
               isOn ? "bg-gray-700" : "bg-gray-300"
             }`}

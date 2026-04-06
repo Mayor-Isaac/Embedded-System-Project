@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from './components/Header'
 import Card from './ui/Card'
+import Hero from './ui/Hero';
 
 export default function Layout() {
   const [devices, setDevices] = React.useState([
@@ -47,6 +48,8 @@ export default function Layout() {
   return (
     <main className='p-5 flex flex-col gap-10'>
       <Header />
+
+      <Hero />
 
       <section className='grid grid-cols-2 gap-6' >
         {devices.map((item) => (
