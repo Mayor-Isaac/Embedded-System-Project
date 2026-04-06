@@ -79,6 +79,10 @@ export default function Hero() {
     const [temp, setTemp] = useState(null);
     const [pressure, setPressure] = useState(null);
 
+    // display values (what UI shows)
+    const [displayTemp, setDisplayTemp] = useState(null);
+    const [displayPressure, setDisplayPressure] = useState(null);
+
     const [tempFade, setTempFade] = useState(false);
     const [pressureFade, setPressureFade] = useState(false);
 
@@ -127,7 +131,13 @@ export default function Hero() {
           <TiWeatherPartlySunny size={48} className="" />
           <h3 className="font-bold text-[40px]">{"Cloudy"}</h3>
         </div>
-        <h1 className={`font-bold text-[48px] transition ease-in-out duration-300 ${tempFade ? 'opacity-0' : 'opacity-100'}`}>{temp}&deg;</h1>
+        <h1
+          className={`font-bold text-[48px] transition-opacity duration-500 ease-in-out ${
+            tempFade ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          {displayTemp ?? "--"}&deg;
+        </h1>
       </div>
 
       <div className="flex gap-5">
@@ -142,7 +152,13 @@ export default function Hero() {
 
       <div className="flex items-center justify-evenly">
         <div className="flex flex-col justify-center items-center">
-          <h3 className={`font-bold text-[24px] transition ease-in-out duration-300 ${pressureFade ? 'opacity-0' : 'opacity-100'}`}>{pressure} hPa</h3>
+          <h3
+            className={`font-bold text-[24px] transition-opacity duration-500 ease-in-out ${
+              pressureFade ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            {displayPressure ?? "--"} hPa
+          </h3>
           <p className="text-18px">Pressure</p>
         </div>
       </div>
