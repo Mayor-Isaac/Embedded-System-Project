@@ -8,7 +8,6 @@ export default function Layout() {
     {
       id: 1,
       name: "Bulb",
-      status: "On",
       activeIcon: "IoBulbSharp",
       inactiveIcon: "IoBulbOutline",
       dbPath: "controls/bulb"
@@ -16,7 +15,6 @@ export default function Layout() {
     {
       id: 2,
       name: "Fan",
-      status: "Off",
       activeIcon: "PiFanFill",
       inactiveIcon: "PiFanLight",
       dbPath: "controls/fan"
@@ -24,7 +22,6 @@ export default function Layout() {
     {
       id: 3,
       name: "Socket",
-      status: "Off",
       activeIcon: "PiPlugsConnectedFill",
       inactiveIcon: "PiPlugsLight",
       dbPath: "controls/socket"
@@ -32,7 +29,6 @@ export default function Layout() {
     {
       id: 4,
       name: "TV",
-      status: "Off",
       activeIcon: "IoTvSharp",
       inactiveIcon: "IoTvOutline",
       dbPath: "controls/tv"
@@ -41,7 +37,7 @@ export default function Layout() {
 
 
   return (
-    <main className="p-5 flex flex-col gap-10">
+    <main className="py-5 px-10 flex flex-col gap-10">
       <Header />
 
       <Hero />

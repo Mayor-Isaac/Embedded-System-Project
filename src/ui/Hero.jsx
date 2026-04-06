@@ -77,32 +77,31 @@ export default function Hero() {
     }, []);
 
     const [temp, setTemp] = useState(null);
-    const [pressure, setPressure] = useState(null);
+    const [humidity, setHumidity] = useState(null);
 
 
     const [tempFade, setTempFade] = useState(false);
-    const [pressureFade, setPressureFade] = useState(false);
-
+    const [humidityFade, setHumidityFade] = useState(false);
 
     useEffect(() => {
       // 1. Point to data path
         const tempRef = ref(db, "environment/temp");
-        const pressureRef = ref(db, "environment/pressure");
+        const humidityRef = ref(db, "environment/humidity");
 
       // Listener for temperature
       const unsubscribeTemp = onValue(tempRef, (snapshot) => {
         const data = snapshot.val();
         setTemp(data);
       });
-        // Listener for pressure
-      const unsubscribePressure = onValue(pressureRef, (snapshot) => {
+        // Listener for humidity
+      const unsubscribeHumidity = onValue(humidityRef, (snapshot) => {
         const data = snapshot.val();
-        setPressure(data);
+        setHumidity(data);
       });
 
         return () => {
             unsubscribeTemp();
-            unsubscribePressure();
+            unsubscribeHumidity();
         }
     }, []);
 
@@ -115,11 +114,11 @@ export default function Hero() {
     }, [temp]);
 
     useEffect(() => {
-      if (pressure === null) return;
-      setPressureFade(true);
-      const t = setTimeout(() => setPressureFade(false), 300);
+      if (humidity === null) return;
+      setHumidityFade(true);
+      const t = setTimeout(() => setHumidityFade(false), 300);
       return () => clearTimeout(t);
-    }, [pressure]);
+    }, [humidity]);
 
   return (
     <div className="py-5 px-10 rounded-3xl bg-linear-to-tr from-teal-500 via-green-500 to-teal-100">
@@ -151,12 +150,12 @@ export default function Hero() {
         <div className="flex flex-col justify-center items-center">
           <h3
             className={`font-bold text-[24px] transition-opacity duration-500 ease-in-out ${
-              pressureFade ? "opacity-0" : "opacity-100"
+              humidityFade ? "opacity-0" : "opacity-100"
             }`}
           >
-            {pressure || "--"} mmHg
+            {humidity || "--"} %
           </h3>
-          <p className="text-18px">Pressure</p>
+          <p className="text-18px">Humidity</p>
         </div>
       </div>
     </div>
