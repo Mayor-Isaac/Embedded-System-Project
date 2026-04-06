@@ -79,9 +79,6 @@ export default function Hero() {
     const [temp, setTemp] = useState(null);
     const [pressure, setPressure] = useState(null);
 
-    // display values (what UI shows)
-    const [displayTemp, setDisplayTemp] = useState(null);
-    const [displayPressure, setDisplayPressure] = useState(null);
 
     const [tempFade, setTempFade] = useState(false);
     const [pressureFade, setPressureFade] = useState(false);
@@ -136,7 +133,7 @@ export default function Hero() {
             tempFade ? "opacity-0" : "opacity-100"
           }`}
         >
-          {displayTemp ?? "--"}&deg;
+          {temp || "--"}&deg;
         </h1>
       </div>
 
@@ -157,7 +154,7 @@ export default function Hero() {
               pressureFade ? "opacity-0" : "opacity-100"
             }`}
           >
-            {displayPressure ?? "--"} hPa
+            {pressure || "--"} mmHg
           </h3>
           <p className="text-18px">Pressure</p>
         </div>
