@@ -5,6 +5,13 @@ import { ref, onValue } from "firebase/database";
 import { TiWeatherPartlySunny } from "react-icons/ti";
 import { IoLocationOutline } from "react-icons/io5";
 
+import {
+  WiRainMix,
+  WiDaySunny,
+  WiDayCloudy,
+  WiNightPartlyCloudy,
+} from "react-icons/wi";
+
 export default function Hero() {
     const [location, setLocation] = useState({
       city: "Getting location...",
@@ -120,13 +127,59 @@ export default function Hero() {
       return () => clearTimeout(t);
     }, [humidity]);
 
+    const getWeatherStatus = (temp, humidity) => {
+      if (temp == null || humidity == null) {
+        return {
+          label: "Loading...",
+          icon: WiNightPartlyCloudy,
+          color: "text-slate-200",
+        };
+      }
+
+      // Very humid = likely rain
+      if (humidity >= 90 || (humidity >= 80 && temp <= 29)) {
+        return {
+          label: "Rainy",
+          icon: WiRainMix,
+          color: "text-blue-600",
+        };
+      }
+
+      // Warm + low humidity = sunny
+      if (temp >= 32 && humidity <= 65) {
+        return {
+          label: "Sunny",
+          icon: WiDaySunny,
+          color: "text-yellow-400",
+        };
+      }
+
+      // High humidity without strong rain signal = cloudy
+      if (humidity >= 75) {
+        return {
+          label: "Cloudy",
+          icon: WiDayCloudy,
+          color: "text-slate-500",
+        };
+      }
+
+      return {
+        label: "Partly Cloudy",
+        icon: WiNightPartlyCloudy,
+        color: "text-amber-400",
+      };
+    };
+
+    const weather = getWeatherStatus(temp, humidity);
+
   return (
     <div className="py-5 px-10 rounded-3xl bg-linear-to-tr from-teal-500 via-green-500 to-teal-100">
       <div className="flex items-center justify-between ">
         <div className="flex gap-4 ">
-          <TiWeatherPartlySunny size={48} className="" />
-          <h3 className="font-bold text-[40px]">{"Cloudy"}</h3>
+          <weather.icon size={48} />
+          <h3 className="font-bold text-[30px]">{weather.label}</h3>
         </div>
+
         <h1
           className={`font-bold text-[48px] transition-opacity duration-500 ease-in-out ${
             tempFade ? "opacity-0" : "opacity-100"
@@ -137,7 +190,7 @@ export default function Hero() {
       </div>
 
       <div className="flex gap-5">
-            <IoLocationOutline size={25} className="inline-block font-bold" />
+        <IoLocationOutline size={25} className="inline-block font-bold" />
         <div className="flex flex-col gap-0.5">
           <p className="font-medium text-[22px]">
             {location.area && `${location.area}, `}
