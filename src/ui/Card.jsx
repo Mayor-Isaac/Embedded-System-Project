@@ -58,7 +58,7 @@ export default function Card({ label, dbPath, data }) {
       />
       <div
         className={`relative z-10 py-9 px-7 flex flex-col gap-8 transition-colors duration-500 ease-in-out ${
-          isOn ? "text-inherit" : "text-gray-200 bg-gray-700/50"
+          isOn ? "text-[#444]" : "text-gray-200 bg-gray-700/50"
         }`}
       >
         <div className="flex items-center justify-between w-full">

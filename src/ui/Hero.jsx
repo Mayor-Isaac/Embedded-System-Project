@@ -173,7 +173,7 @@ export default function Hero() {
     const weather = getWeatherStatus(temp, humidity);
 
   return (
-    <div className="py-5 px-10 rounded-3xl bg-linear-to-tr from-teal-500 via-green-500 to-teal-100">
+    <div className="py-5 px-10 rounded-3xl text-[#444] bg-linear-to-tr from-teal-500 via-green-500 to-teal-100">
       <div className="flex items-center justify-between ">
         <div className="flex gap-4 ">
           <weather.icon size={48} />

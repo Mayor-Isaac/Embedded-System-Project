@@ -10,8 +10,9 @@ html{
 body{
   font-family: "Space Grotesk", sans-serif;
   font-size: 1.8rem;
-  background-color: #fff;
-  color: #444;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f766e 55%, #14b8a6 80%, #d9f99d 100%);
+  background-attachment: fixed;
+  color: #e5e7eb;
 }
 
 .font-dm{
