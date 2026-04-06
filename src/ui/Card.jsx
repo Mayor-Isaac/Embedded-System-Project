@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { db } from "./firebaseConfig";
 import { ref, onValue, set } from "firebase/database";
 
 import { MdWifi, MdWifi1Bar } from "react-icons/md";
@@ -11,6 +10,7 @@ import { PiPlugsLight } from "react-icons/pi";
 import { PiPlugsConnectedFill } from "react-icons/pi";
 import { IoTvOutline } from "react-icons/io5";
 import { IoTvSharp } from "react-icons/io5";
+import { db } from "../../firebaseConfig";
 
 const iconMap = {
   IoBulbOutline,
@@ -25,25 +25,29 @@ const iconMap = {
 
 
 export default function Card({ label, dbPath, data }) {
-  const isOn = data.status === "On";
   const ActiveIcon = iconMap[data.activeIcon];
   const InactiveIcon = iconMap[data.inactiveIcon];
-
-  const [status, setStatus] = useState(0);
+  
+  const [isOn, setIsOn] = useState(false);
 
   useEffect(() => {
-    // Listen for real-time changes from the hardware/database
     const statusRef = ref(db, dbPath);
-    return onValue(statusRef, (snapshot) => {
-      setStatus(snapshot.val() || 0);
+
+    const unsubscribe = onValue(statusRef, (snapshot) => {
+      const data = snapshot.val();
+      setIsOn(data === 1); // If database is 1, set state to true
     });
+
+    return () => unsubscribe(); // Cleanup listener on unmount
   }, [dbPath]);
 
   const handleToggle = () => {
-    // Flip the value: if 0 make it 1, if 1 make it 0
-    const nextStatus = status === 0 ? 1 : 0;
-    set(ref(db, dbPath), nextStatus);
+
+    const newValue = isOn ? 0 : 1;
+    set(ref(db, dbPath), newValue);
+
   };
+
 
   return (
     <div className="relative overflow-hidden rounded-3xl">
@@ -59,7 +63,7 @@ export default function Card({ label, dbPath, data }) {
       >
         <div className="flex items-center justify-between w-full">
           <div className="relative w-6 h-6 text-2xl">
-            {/* {ActiveIcon && (
+            {ActiveIcon && (
               <ActiveIcon
                 size={24}
                 className={` ${data.name === "Bulb" ? "text-yellow-200" : data.name === "Fan" ? "animate-spin" : ""} absolute inset-0 transition-all duration-300 ${
@@ -74,7 +78,7 @@ export default function Card({ label, dbPath, data }) {
                   !isOn ? "opacity-100 scale-100" : "opacity-0 scale-75"
                 }`}
               />
-            )} */}
+            )}
           </div>
 
           <div className="relative w-6 h-6 text-2xl">
@@ -93,10 +97,10 @@ export default function Card({ label, dbPath, data }) {
           </div>
         </div>
 
-        {/* <p className="font-bold text-[20px]">{data.name}</p> */}
+        <p className="font-bold text-[20px]">{label}</p>
 
         <div className="flex items-center justify-between w-full">
-          {/* <h3 className="uppercase font-light text-[16px] ">{data.status}</h3> */}
+          <h3 className="uppercase font-light text-[16px] ">{isOn ? "ON" : "OFF"}</h3>
           <div
             onClick={handleToggle}
             className={`w-14 h-8 p-0.5 cursor-pointer transition relative ease-in-out duration-200 rounded-full ${

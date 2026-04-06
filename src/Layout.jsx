@@ -4,13 +4,14 @@ import Card from './ui/Card'
 import Hero from './ui/Hero';
 
 export default function Layout() {
-  const [devices, setDevices] = React.useState([
+  const deviceArr = [
     {
       id: 1,
       name: "Bulb",
       status: "On",
       activeIcon: "IoBulbSharp",
       inactiveIcon: "IoBulbOutline",
+      dbPath: "controls/bulb"
     },
     {
       id: 2,
@@ -18,6 +19,7 @@ export default function Layout() {
       status: "Off",
       activeIcon: "PiFanFill",
       inactiveIcon: "PiFanLight",
+      dbPath: "controls/fan"
     },
     {
       id: 3,
@@ -25,6 +27,7 @@ export default function Layout() {
       status: "Off",
       activeIcon: "PiPlugsConnectedFill",
       inactiveIcon: "PiPlugsLight",
+      dbPath: "controls/socket"
     },
     {
       id: 4,
@@ -32,30 +35,27 @@ export default function Layout() {
       status: "Off",
       activeIcon: "IoTvSharp",
       inactiveIcon: "IoTvOutline",
+      dbPath: "controls/tv"
     },
-  ]);
+  ];
 
-  const handleToggle = (id) => {
-    setDevices((prev) =>
-      prev.map((device) =>
-        device.id === id
-          ? { ...device, status: device.status === 'On' ? 'Off' : 'On' }
-          : device
-      )
-    )
-  }
 
   return (
-    <main className='p-5 flex flex-col gap-10'>
+    <main className="p-5 flex flex-col gap-10">
       <Header />
 
       <Hero />
 
-      <section className='grid grid-cols-2 gap-6' >
-        {devices.map((item) => (
-          <Card key={item.id} data={item} onToggle={() => handleToggle(item.id)} />
+      <section className="grid grid-cols-2 gap-6">
+        {deviceArr.map((item) => (
+          <Card
+            key={item.name}
+            data={item}
+            label={item.name}
+            dbPath={item.dbPath}
+          />
         ))}
       </section>
     </main>
-  )
+  );
 }

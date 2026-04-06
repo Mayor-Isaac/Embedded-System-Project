@@ -1,6 +1,7 @@
 import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from "react";
+import { db } from '../../firebaseConfig';
+import { ref, onValue } from "firebase/database";
 import { TiWeatherPartlySunny } from "react-icons/ti";
 import { IoLocationOutline } from "react-icons/io5";
 
@@ -75,7 +76,32 @@ export default function Hero() {
       );
     }, []);
 
-    console.log(location);
+    const [temp, setTemp] = useState(null);
+    const [pressure, setPressure] = useState(null);
+
+    useEffect(() => {
+      // 1. Point to data path
+        const tempRef = ref(db, "environment/temp");
+        const pressureRef = ref(db, "environment/pressure");
+
+      // Listener for temperature
+      const unsubscribeTemp = onValue(tempRef, (snapshot) => {
+        const data = snapshot.val();
+        setTemp(data);
+      });
+        // Listener for pressure
+      const unsubscribePressure = onValue(pressureRef, (snapshot) => {
+        const data = snapshot.val();
+        setPressure(data);
+      });
+
+        return () => {
+            unsubscribeTemp();
+            unsubscribePressure();
+        }
+    }, []);
+
+
 
   return (
     <div className="py-5 px-10 rounded-3xl bg-linear-to-tr from-teal-500 via-green-500 to-teal-100">
@@ -84,7 +110,7 @@ export default function Hero() {
           <TiWeatherPartlySunny size={48} className="" />
           <h3 className="font-bold text-[40px]">{"Cloudy"}</h3>
         </div>
-        <h1 className="font-bold text-[48px]">{28}&deg;</h1>
+        <h1 className="font-bold text-[48px] transition ease-in-out duration-300">{temp}&deg;</h1>
       </div>
 
       <div className="flex gap-5">
@@ -99,7 +125,7 @@ export default function Hero() {
 
       <div className="flex items-center justify-evenly">
         <div className="flex flex-col justify-center items-center">
-          <h3 className="font-bold text-[24px]">1009hpa</h3>
+          <h3 className="font-bold text-[24px] transition ease-in-out duration-300">{pressure} hPa</h3>
           <p className="text-18px">Pressure</p>
         </div>
       </div>
