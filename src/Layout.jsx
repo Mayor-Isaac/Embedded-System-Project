@@ -37,12 +37,12 @@ export default function Layout() {
 
 
   return (
-    <main className="py-5 px-10 flex flex-col gap-10">
+    <main className="py-5 px-10 flex max-h-screen flex-col gap-10">
       <Header />
 
       <Hero />
 
-      <section className="grid grid-cols-2 gap-6">
+      <section className="grid grid-cols-2 flex-1 gap-6">
         {deviceArr.map((item) => (
           <Card
             key={item.name}
