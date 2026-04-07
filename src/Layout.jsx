@@ -52,6 +52,11 @@ export default function Layout() {
           />
         ))}
       </section>
+
+      {/* Copyright */}
+      <p className="text-center text-[14px]">
+        &copy; {new Date().getFullYear()} EEE Group 10 Smart Home Dashboard. All rights reserved.
+      </p>
     </main>
   );
 }
