@@ -5,9 +5,18 @@ import App from './App.jsx'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
-    <ToastContainer position="top-right" autoClose={1500} />
+    <ToastContainer
+      position="top-right"
+      autoClose={1500}
+      toastStyle={{
+        width: "165px",
+        minHeight: "44px",
+        fontSize: "12px",
+        padding: "8px 10px",
+      }}
+    />
   </StrictMode>,
-)
+);
