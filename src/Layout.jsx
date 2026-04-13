@@ -10,29 +10,29 @@ export default function Layout() {
       name: "Bulb",
       activeIcon: "IoBulbSharp",
       inactiveIcon: "IoBulbOutline",
-      dbPath: "controls/bulb"
+      dbPath: "controls/bulb",
     },
     {
       id: 2,
       name: "Fan",
       activeIcon: "PiFanFill",
       inactiveIcon: "PiFanLight",
-      dbPath: "controls/fan"
+      dbPath: "controls/fan",
     },
     {
       id: 3,
       name: "Socket",
       activeIcon: "PiPlugsConnectedFill",
       inactiveIcon: "PiPlugsLight",
-      dbPath: "controls/socket"
+      dbPath: "controls/tv",
     },
-    {
-      id: 4,
-      name: "TV",
-      activeIcon: "IoTvSharp",
-      inactiveIcon: "IoTvOutline",
-      dbPath: "controls/tv"
-    },
+    // {
+    //   id: 4,
+    //   name: "TV",
+    //   activeIcon: "IoTvSharp",
+    //   inactiveIcon: "IoTvOutline",
+    //   dbPath: "controls/socket",
+    // },
   ];
 
 
@@ -42,7 +42,7 @@ export default function Layout() {
 
       <Hero />
 
-      <section className="grid grid-cols-2 flex-1 gap-6">
+      <section className="grid grid-cols-1 flex-1 gap-6">
         {deviceArr.map((item) => (
           <Card
             key={item.name}

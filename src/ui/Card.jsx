@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ref, onValue, set } from "firebase/database";
+import { toast } from "react-toastify";
 
 import { MdWifi, MdWifi1Bar } from "react-icons/md";
 import { IoBulbOutline } from "react-icons/io5";
@@ -23,7 +24,6 @@ const iconMap = {
   IoTvSharp,
 };
 
-
 export default function Card({ label, dbPath, data }) {
   const ActiveIcon = iconMap[data.activeIcon];
   const InactiveIcon = iconMap[data.inactiveIcon];
@@ -41,11 +41,15 @@ export default function Card({ label, dbPath, data }) {
     return () => unsubscribe(); // Cleanup listener on unmount
   }, [dbPath]);
 
-  const handleToggle = () => {
-
+  const handleToggle = async () => {
     const newValue = isOn ? 0 : 1;
-    set(ref(db, dbPath), newValue);
 
+    try {
+      await set(ref(db, dbPath), newValue);
+      toast.success(label + " turned " + (newValue ? "ON" : "OFF"));
+    } catch (error) {
+      toast.error("Failed to toggle " + label);
+    }
   };
 
 
